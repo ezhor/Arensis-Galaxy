@@ -2,7 +2,7 @@
 
 namespace Model
 {
-    public struct PlayerInfo
+    public class PlayerInfo
     {
         public string ID;
         public string Name;

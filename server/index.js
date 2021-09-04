@@ -5,33 +5,45 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+const port = 80;
+
 var playersInfo = {};
 
 app.use(express.static(__dirname + '/game/'));
 
 io.on('connection', (socket) => {
+	console.log("User connected: " + socket.id);
   
 	socket.on('PlayerInfo', (info) => {
-		console.log("Player info - Name: " + info.name + ", Color: " + info.color);
-		info.id = socket.id;
+		console.log("Player info:" + info);
+		info = JSON.parse(info);
+		info.ID = socket.id;
 		playersInfo[socket.id] = info;
-		io.emit('PlayerStatus', info);
+		io.emit('PlayerInfo', JSON.stringify(info));
 	});
 	
 	socket.on('PlayerStatus', (state) => {
-		state.id = socket.id;
-		io.emit('PlayerStatus', state);
+		state = JSON.parse(state);
+		state.ID = socket.id;
+		io.emit('PlayerStatus', JSON.stringify(state));
 	});
 	
 	socket.on('PlayerInfoRequest', (playerId) => {
+		console.log("Requested: " + playerId);
 		var info = playersInfo[playerId];
 		if(info != undefined){
-			socket.to(socket.id).emit('PlayerInfo', info.id, info);
+			socket.emit('PlayerInfo', JSON.stringify(info));
 		}
+	});
+	
+	socket.on('disconnect', () => {
+		console.log("User disconnected: " + socket.id);
+		delete playersInfo[socket.id];
+		io.emit('PlayerDisconnected', socket.id);
 	});
 	
 });
 
-server.listen(3000, () => {
-	console.log('listening on *:3000');
+server.listen(port, () => {
+	console.log("Listening on port " + port);
 });

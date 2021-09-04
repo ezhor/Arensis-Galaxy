@@ -1,7 +1,7 @@
 {
-"companyName": "DefaultCompany",
-"productName": "Arensis Universe",
-"productVersion": "0.1",
+"companyName": "Arensis Games",
+"productName": "Arensis Galaxy",
+"productVersion": "1.0",
 "dataUrl": "game.data.unityweb",
 "wasmCodeUrl": "game.wasm.code.unityweb",
 "wasmFrameworkUrl": "game.wasm.framework.unityweb",
