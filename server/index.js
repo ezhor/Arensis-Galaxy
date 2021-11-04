@@ -1,15 +1,27 @@
 const express = require('express');
 const app = express();
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+const https = require('https');
+const fs = require( 'fs' );
 
-const port = 80;
+const server = https.createServer({
+	key: fs.readFileSync('/etc/letsencrypt/live/6106c6d3-8032-430f-bdbf-bf51c216cd80.clouding.host/privkey.pem'),
+	cert: fs.readFileSync('/etc/letsencrypt/live/6106c6d3-8032-430f-bdbf-bf51c216cd80.clouding.host/fullchain.pem')},
+	app)
+	
+const { Server } = require("socket.io");
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+const port = 81;
 
 var playersInfo = {};
 
-app.use(express.static(__dirname + '/game/'));
+//app.use(express.static(__dirname + '/game/'));
 
 io.on('connection', (socket) => {
 	console.log("User connected: " + socket.id);

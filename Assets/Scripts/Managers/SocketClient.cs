@@ -10,15 +10,16 @@ public class SocketClient : MonoBehaviour
     [SerializeField]
     private GameObject remotePlayerPrefab;
 
-    private static readonly float DELAY = 0.05f;
+    private static readonly float DELAY = 0.01f;
 
     private readonly Dictionary<string, RemotePlayer> _remotePlayers = new Dictionary<string, RemotePlayer>();
     private SocketManager _manager;
+    private const string SERVER_URL = "https://6106c6d3-8032-430f-bdbf-bf51c216cd80.clouding.host:81";
 
     void Start()
     {
-        Debug.Log("Connecting to server...");
-        _manager = new SocketManager(new Uri("http://mirandaserver.ddns.net:80"));
+        Debug.Log($"Connecting to {SERVER_URL} ...");
+        _manager = new SocketManager(new Uri(SERVER_URL));
         _manager.Socket.On(SocketIOEventTypes.Connect, OnConnected);
         _manager.Socket.On<string>("PlayerInfo", OnPlayerInfo);
         _manager.Socket.On<string>("PlayerStatus", OnPlayerStatus);
