@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputField: {fileID: 1856189451}
+  maxNameLenght: 15
 --- !u!1 &940775808
 GameObject:
   m_ObjectHideFlags: 0

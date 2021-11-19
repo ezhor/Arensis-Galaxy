@@ -1,44 +1,48 @@
-﻿using UnityEngine;
+﻿using Manager;
+using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace Player
 {
-    [SerializeField]
-    private float thrusterForce;
-    [SerializeField]
-    private float rotationSpeed;
-    private Rigidbody2D _rb;
-    private PlayerVisuals _playerVisuals;
-
-
-    private void Awake()
+    public class PlayerController : MonoBehaviour
     {
-        _playerVisuals = GetComponent<PlayerVisuals>();
-        _rb = GetComponent<Rigidbody2D>();
-        GetComponent<PlayerVisuals>().SetPlayerVisuals(GameController.PlayerInfo.Name, GameController.PlayerInfo.Color);
-    }
+        [SerializeField]
+        private float thrusterForce;
+        [SerializeField]
+        private float rotationSpeed;
+        private Rigidbody2D _rb;
+        private PlayerVisuals _playerVisuals;
+
+
+        private void Awake()
+        {
+            _playerVisuals = GetComponent<PlayerVisuals>();
+            _rb = GetComponent<Rigidbody2D>();
+            GetComponent<PlayerVisuals>().SetPlayerVisuals(GameController.PlayerInfo.Name, GameController.PlayerInfo.Color);
+        }
     
     
 
-    private void Update()
-    {
-        _playerVisuals.EmitFireParticles = Input.GetKey(KeyCode.UpArrow);
-    }
-
-    private void FixedUpdate()
-    {
-        if (Input.GetKey(KeyCode.UpArrow))
+        private void Update()
         {
-            _rb.AddForce(transform.up * thrusterForce, ForceMode2D.Impulse);
+            _playerVisuals.EmitFireParticles = Input.GetKey(KeyCode.UpArrow);
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        private void FixedUpdate()
         {
-            transform.Rotate(Vector3.forward, rotationSpeed * Time.fixedDeltaTime);
-        }
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                _rb.AddForce(transform.up * thrusterForce, ForceMode2D.Impulse);
+            }
 
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.Rotate(Vector3.forward, -rotationSpeed * Time.fixedDeltaTime);
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                transform.Rotate(Vector3.forward, rotationSpeed * Time.fixedDeltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                transform.Rotate(Vector3.forward, -rotationSpeed * Time.fixedDeltaTime);
+            }
         }
     }
 }

@@ -4,8 +4,8 @@ const https = require('https');
 const fs = require( 'fs' );
 
 const server = https.createServer({
-	key: fs.readFileSync('/etc/letsencrypt/live/6106c6d3-8032-430f-bdbf-bf51c216cd80.clouding.host/privkey.pem'),
-	cert: fs.readFileSync('/etc/letsencrypt/live/6106c6d3-8032-430f-bdbf-bf51c216cd80.clouding.host/fullchain.pem')},
+	key: fs.readFileSync('/etc/letsencrypt/live/mirandaserver.ddns.net/privkey.pem'),
+	cert: fs.readFileSync('/etc/letsencrypt/live/mirandaserver.ddns.net/fullchain.pem')},
 	app)
 	
 const { Server } = require("socket.io");

@@ -1,38 +1,40 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-public class PlayerVisuals : MonoBehaviour
+namespace Player
 {
-    public bool EmitFireParticles { get; set; }
-
-    private static readonly int NewColor = Shader.PropertyToID("NewColor");
-
-    private ParticleSystem _fireParticles;
-
-    private void Awake()
+    public class PlayerVisuals : MonoBehaviour
     {
-        _fireParticles = GetComponentInChildren<ParticleSystem>();
-    }
+        public bool EmitFireParticles { get; set; }
 
-    private void Update()
-    {
-        if (EmitFireParticles)
+        private static readonly int NewColor = Shader.PropertyToID("NewColor");
+
+        private ParticleSystem _fireParticles;
+
+        private void Awake()
         {
-            if (!_fireParticles.isEmitting)
+            _fireParticles = GetComponentInChildren<ParticleSystem>();
+        }
+
+        private void Update()
+        {
+            if (EmitFireParticles)
             {
-                _fireParticles.Play();
+                if (!_fireParticles.isEmitting)
+                {
+                    _fireParticles.Play();
+                }
+            }
+            else
+            {
+                _fireParticles.Stop();
             }
         }
-        else
-        {
-            _fireParticles.Stop();
-        }
-    }
 
-    public void SetPlayerVisuals(string playerName, Color color)
-    {
-        transform.parent.GetComponentInChildren<TextMeshPro>().text = playerName;
-        GetComponentInChildren<SpriteRenderer>().material.SetColor(NewColor, color);
+        public void SetPlayerVisuals(string playerName, Color color)
+        {
+            transform.parent.GetComponentInChildren<TextMeshPro>().text = playerName;
+            GetComponentInChildren<SpriteRenderer>().material.SetColor(NewColor, color);
+        }
     }
 }
